@@ -1,0 +1,167 @@
+<html>
+<body>
+<head>
+<style>
+body{
+text-align:center;
+background:#a46740 ;
+
+}
+.cardAK{
+background:url(img/1.jpg) no-repeat;
+background-size:100% 100%;
+}
+#game{
+border-radius:10px;
+border:1px solid #666;
+background:#232;
+width:500px;
+height:460px;
+margin:200px auto;
+display:-webkit-box;
+-webkit-box-pack:center;
+-webkit-box-align:center;
+}
+#cards{
+width:380px;
+height:400px;
+position:relative;
+
+}
+.card{
+width:80px;
+height:120px;
+position:absolute;
+-webkit-perspective:600;
+}
+.face{
+width:100%;
+height:100%;
+border-radius:10px;
+-webkit-backface-visibility:hidden;
+transition:all 1s;
+position:absolute;
+-webkit-transition-property:transform,opacity,box-shadow;
+-webkit-transition-duration:1s;
+}
+.font{
+background:teal;
+z-index:10;
+}
+.back{
+z-index:8;
+transform:rotate3d(0,1,0,180deg);
+}
+.card:hover .face{
+box-shadow:0 0 10px #aaa;
+}
+.qw .font{
+z-index:8;
+transform:rotate3d(0,-1,0,180deg);
+}
+.qw .back{
+z-index:10;
+transform:rotate3d(0,1,0,0deg);
+}
+span{
+opacity:0;
+}
+</style>
+
+</head>
+
+<section id="game">
+<div id="cards">
+<div class="card" id="0">
+<div class="face font" ></div>
+<div class="face back cardAK"><span></span></div>
+</div>
+
+
+</div>
+</section>
+
+
+<script src="jquery-1.8.3.min.js"></script>
+<script>
+var arr=[];
+for(var i=0;i<6;i++){
+arr[i]=i;
+arr[6+i]=i;
+var boo=true;
+var a;
+var x,y;
+var b=[];
+var h=0;
+
+
+}
+function num(){
+return arr.sort(function(){return Math.random()-0.5})
+}
+num();
+$(function(){
+
+for(var i=0;i<11;i++){
+$(".card:first-child").clone().appendTo("#cards").attr('id',i+1);
+}
+$("#cards").children().each(function(index){
+$(this).css({
+"left":($(this).width()+20)*(index%4),
+"top":($(this).height()+20)*Math.floor(index/4)
+})
+})
+$(".cardAK").each(function(index){
+$(this).css({
+"background":"url(img/"+arr[index]+".jpg) no-repeat",
+"background-size":"100% 100%"
+})
+$(".cardAK span").each(function(index){
+$(this).html(arr[index])
+})
+})
+
+
+
+
+
+$(".font").each(function(index){
+$(this).click(function(){
+b.push($(this).parent().find('span').html());
+h++;
+if($('.qw').size()<2){
+$(this).parent().addClass('qw');
+}
+if(boo){
+x=b[h-1];
+boo=false;
+
+}
+else{
+y=b[h-1];
+boo=true;
+setTimeout(check,700)
+}
+})
+})
+})
+
+
+function check(){//check()
+if(x==y){
+
+$('.qw').remove()
+}
+else{
+$('.qw').removeClass('qw');
+}
+
+}//check()
+
+
+
+
+
+</script>
+</body>
+</html>
